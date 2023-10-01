@@ -74,6 +74,10 @@ export const getCardAuthor = (card: any) => {
   return card.body[3].text;
 };
 
+export const setCardTag = (card: any, tags?: string) => {
+  card.body[2].text = tags;
+};
+
 export const setCardAuthor = (card: any, author?: string) => {
   card.body[3].text = author;
 };

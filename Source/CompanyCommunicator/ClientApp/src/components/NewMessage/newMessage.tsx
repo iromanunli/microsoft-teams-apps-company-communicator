@@ -53,6 +53,7 @@ import {
   setCardImageLink,
   setCardSummary,
   setCardTitle,
+  setCardTag,
 } from '../AdaptiveCard/adaptiveCard';
 
 const validImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/jpg'];
@@ -71,6 +72,7 @@ interface IMessageState {
   allUsers: boolean;
   isScheduled?: boolean;
   scheduledDate?: string;
+  tags?: string;
 }
 
 interface ITeamTemplate {
@@ -178,6 +180,7 @@ export const NewMessage = () => {
       !messageState.imageLink &&
       !messageState.summary &&
       !messageState.author &&
+      !messageState.tags &&
       !messageState.buttonTitle &&
       !messageState.buttonLink
     ) {
@@ -188,6 +191,7 @@ export const NewMessage = () => {
       setCardImageLink(card, messageState.imageLink);
       setCardSummary(card, messageState.summary);
       setCardAuthor(card, messageState.author);
+      setCardTag(card, messageState.tags);
       setCardBtn(card, messageState.buttonTitle, messageState.buttonLink);
     }
     updateAdaptiveCard();
@@ -270,6 +274,7 @@ export const NewMessage = () => {
           teams: draftMessageDetail.teams,
           rosters: draftMessageDetail.rosters,
           groups: draftMessageDetail.groups,
+          tags: draftMessageDetail.tags,
           allUsers: draftMessageDetail.allUsers,
           isScheduled: draftMessageDetail.isScheduled,
           scheduledDate: draftMessageDetail.scheduledDate,
@@ -293,11 +298,13 @@ export const NewMessage = () => {
     const summaryAsString = t('Summary');
     const authorAsString = t('Author1');
     const buttonTitleAsString = t('ButtonTitle');
+    const tagsAsString = t('Tags');
     setCardTitle(card, titleAsString);
     const imgUrl = getBaseUrl() + '/image/imagePlaceholder.png';
     setCardImageLink(card, imgUrl);
     setCardSummary(card, summaryAsString);
     setCardAuthor(card, authorAsString);
+    setCardTag(card, tagsAsString);
     setCardBtn(card, buttonTitleAsString, 'https://adaptivecards.io');
   };
 
@@ -592,6 +599,10 @@ export const NewMessage = () => {
     setMessageState({ ...messageState, author: event.target.value });
   };
 
+  const onTagsChanged = (event: any) => {
+    setMessageState({ ...messageState, tags: event.target.value });
+  };
+
   const onBtnTitleChanged = (event: any) => {
     setMessageState({ ...messageState, buttonTitle: event.target.value });
   };
@@ -863,6 +874,21 @@ export const NewMessage = () => {
                   value={messageState.buttonLink ?? ''}
                 />
               </Field>
+            <Field
+                size='large'
+                className={fieldStyles.styles}
+                label={t('Tags')}
+            >
+                <Input
+                    size='large'
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    placeholder={t('Tags')!}
+                    onChange={onTagsChanged}
+                    autoComplete='off'
+                    appearance='filled-darker'
+                    value={messageState.tags ?? ''}
+                />
+            </Field>
             </div>
             <div className='card-area'>
               <div className={cardAreaBorderClass}>
