@@ -888,7 +888,7 @@ export const NewMessage = () => {
                   appearance='filled-darker'
                   value={messageState.buttonLink ?? ''}
                 />
-              </Field>            
+              </Field>
             </div>
             <div className='card-area'>
               <div className={cardAreaBorderClass}>
