@@ -754,7 +754,22 @@ export const NewMessage = () => {
                   appearance='filled-darker'
                   value={messageState.title || ''}
                 />
-              </Field>
+                </Field>
+                <Field
+                    size='large'
+                    className={fieldStyles.styles}
+                    label={t('Tags')}
+                >
+                    <Input
+                        size='large'
+                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                        placeholder={t('Tags')!}
+                        onChange={onTagsChanged}
+                        autoComplete='off'
+                        appearance='filled-darker'
+                        value={messageState.tags ?? ''}
+                    />
+                </Field>
               <Field
                 size='large'
                 className={fieldStyles.styles}
@@ -873,22 +888,7 @@ export const NewMessage = () => {
                   appearance='filled-darker'
                   value={messageState.buttonLink ?? ''}
                 />
-              </Field>
-            <Field
-                size='large'
-                className={fieldStyles.styles}
-                label={t('Tags')}
-            >
-                <Input
-                    size='large'
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    placeholder={t('Tags')!}
-                    onChange={onTagsChanged}
-                    autoComplete='off'
-                    appearance='filled-darker'
-                    value={messageState.tags ?? ''}
-                />
-            </Field>
+              </Field>            
             </div>
             <div className='card-area'>
               <div className={cardAreaBorderClass}>
