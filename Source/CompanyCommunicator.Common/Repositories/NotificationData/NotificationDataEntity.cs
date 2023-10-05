@@ -67,6 +67,11 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Repositories.Notificat
         public string CreatedBy { get; set; }
 
         /// <summary>
+        /// Gets or sets tags for the notification.
+        /// </summary>
+        public string Tags { get; set; }
+
+        /// <summary>
         /// Gets or sets the DateTime the notification was created.
         /// </summary>
         public DateTime CreatedDate { get; set; }
