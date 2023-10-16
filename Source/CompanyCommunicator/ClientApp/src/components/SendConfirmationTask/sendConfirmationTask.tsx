@@ -34,7 +34,6 @@ export interface IConsentState {
   teamNames: string[];
   rosterNames: string[];
   groupNames: string[];
-  allUsers: boolean;
   messageId: number;
   isConsentsUpdated: boolean;
 }
@@ -59,7 +58,6 @@ export const SendConfirmationTask = () => {
     teamNames: [],
     rosterNames: [],
     groupNames: [],
-    allUsers: false,
     messageId: 0,
     isConsentsUpdated: false,
   });
@@ -118,7 +116,6 @@ export const SendConfirmationTask = () => {
           teamNames: response.teamNames.sort(),
           rosterNames: response.rosterNames.sort(),
           groupNames: response.groupNames.sort(),
-          allUsers: response.allUsers,
           messageId: id,
           isConsentsUpdated: true,
         });

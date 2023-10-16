@@ -69,7 +69,6 @@ interface IMessageState {
   teams: any[];
   rosters: any[];
   groups: any[];
-  allUsers: boolean;
   isScheduled?: boolean;
   scheduledDate?: string;
   tags?: string;
@@ -110,8 +109,7 @@ enum AudienceSelection {
   Teams = 'Teams',
   Rosters = 'Rosters',
   Groups = 'Groups',
-  AllUsers = 'AllUsers',
-  None = 'None',
+  None = 'None'
 }
 
 enum CurrentPageSelection {
@@ -136,21 +134,18 @@ export const NewMessage = () => {
   const canAccessGroups = useAppSelector((state: RootState) => state.messages).verifyGroup.payload;
   const [selectedRadioButton, setSelectedRadioButton] = React.useState(AudienceSelection.None);
   const [pageSelection, setPageSelection] = React.useState(CurrentPageSelection.CardCreation);
-  const [allUsersState, setAllUsersState] = React.useState(false);
   const [imageFileName, setImageFileName] = React.useState('');
   const [imageUploadErrorMessage, setImageUploadErrorMessage] = React.useState('');
   const [titleErrorMessage, setTitleErrorMessage] = React.useState('');
   const [btnLinkErrorMessage, setBtnLinkErrorMessage] = React.useState('');
   const [showMsgDraftingSpinner, setShowMsgDraftingSpinner] = React.useState(false);
-  /* const [allUsersAria, setAllUserAria] = React.useState('none'); */
   const [groupsAria, setGroupsAria] = React.useState('none');
   const [cardAreaBorderClass, setCardAreaBorderClass] = React.useState('');
   const [messageState, setMessageState] = React.useState<IMessageState>({
     title: '',
     teams: [],
     rosters: [],
-    groups: [],
-    allUsers: false,
+    groups: []
   });
 
   // Handle selectedOptions both when an option is selected or deselected in the Combobox,
@@ -208,7 +203,6 @@ export const NewMessage = () => {
     setTeamsSelectedOptions([]);
     setRostersSelectedOptions([]);
     setSearchSelectedOptions([]);
-    setAllUsersState(false);
     if (teams && teams.length > 0) {
       const teamsSelected = teams.filter((c) => messageState.teams.some((s) => s === c.id));
       setTeamsSelectedOptions(teamsSelected || []);
@@ -219,10 +213,7 @@ export const NewMessage = () => {
       const groupsSelected = groups.filter((c) => messageState.groups.some((s) => s === c.id));
       setSearchSelectedOptions(groupsSelected || []);
     }
-    if (messageState.allUsers) {
-      setAllUsersState(true);
-    }
-  }, [teams, groups, messageState.teams, messageState.rosters, messageState.allUsers, messageState.groups]);
+  }, [teams, groups, messageState.teams, messageState.rosters, messageState.groups]);
 
   React.useEffect(() => {
     let currentDateTime = new Date();
@@ -260,10 +251,6 @@ export const NewMessage = () => {
         } else if (draftMessageDetail.groups.length > 0) {
           setSelectedRadioButton(AudienceSelection.Groups);
         }
-
-        // else if (draftMessageDetail.allUsers) {
-        //   setSelectedRadioButton(AudienceSelection.AllUsers);
-        // }
         setMessageState({
           ...messageState,
           id: draftMessageDetail.id,
@@ -277,7 +264,6 @@ export const NewMessage = () => {
           rosters: draftMessageDetail.rosters,
           groups: draftMessageDetail.groups,
           tags: draftMessageDetail.tags,
-          allUsers: draftMessageDetail.allUsers,
           isScheduled: draftMessageDetail.isScheduled,
           scheduledDate: draftMessageDetail.scheduledDate,
         });
@@ -548,7 +534,6 @@ export const NewMessage = () => {
 
   const onBack = (event: any) => {
     setPageSelection(CurrentPageSelection.CardCreation);
-    // setAllUserAria('none');
     setGroupsAria('none');
   };
 
@@ -715,10 +700,6 @@ export const NewMessage = () => {
   const audienceSelectionChange = (ev: any, data: RadioGroupOnChangeData) => {
     const input = data.value as keyof typeof AudienceSelection;
     setSelectedRadioButton(AudienceSelection[input]);
-
-    if (allUsersState) {
-      setAllUsersState(false);
-    }
 
     AudienceSelection[input] === AudienceSelection.Groups ? setGroupsAria('alert') : setGroupsAria('none');
   };

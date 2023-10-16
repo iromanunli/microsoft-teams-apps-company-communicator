@@ -33,7 +33,6 @@ export interface IMessageState {
   teamNames?: string[];
   rosterNames?: string[];
   groupNames?: string[];
-  allUsers?: boolean;
   sendingStartedDate?: string;
   sendingDuration?: string;
   errorMessage?: string;
