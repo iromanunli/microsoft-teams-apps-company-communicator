@@ -59,11 +59,6 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Models
         public IEnumerable<string> GroupNames { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether a notification was sent to all users.
-        /// </summary>
-        public bool AllUsers { get; set; }
-
-        /// <summary>
         /// Gets or sets error message.
         /// </summary>
         public string ErrorMessage { get; set; }

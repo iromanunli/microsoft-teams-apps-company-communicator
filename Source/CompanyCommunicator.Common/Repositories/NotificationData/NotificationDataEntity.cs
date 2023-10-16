@@ -143,12 +143,6 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Repositories.Notificat
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether a notification should be sent to all the
-        /// known users - this is equivalent to all of the users stored in the User Data table.
-        /// </summary>
-        public bool AllUsers { get; set; }
-
-        /// <summary>
         /// Gets or sets the message version number.
         /// </summary>
         public string MessageVersion { get; set; }

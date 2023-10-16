@@ -166,7 +166,6 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Controllers
                 Teams = notification.Teams,
                 Rosters = notification.Rosters,
                 Groups = notification.Groups,
-                AllUsers = notification.AllUsers,
                 IsScheduled = notification.IsScheduled,
                 ScheduledDate = notification.ScheduledDate,
             };
@@ -272,7 +271,6 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Controllers
                 Teams = notificationEntity.Teams,
                 Rosters = notificationEntity.Rosters,
                 Groups = notificationEntity.Groups,
-                AllUsers = notificationEntity.AllUsers,
                 IsScheduled = notificationEntity.IsScheduled,
                 ScheduledDate = notificationEntity.ScheduledDate,
             };
@@ -319,7 +317,6 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Controllers
                 TeamNames = await this.teamDataRepository.GetTeamNamesByIdsAsync(notificationEntity.Teams),
                 RosterNames = await this.teamDataRepository.GetTeamNamesByIdsAsync(notificationEntity.Rosters),
                 GroupNames = groupNames,
-                AllUsers = notificationEntity.AllUsers,
             };
 
             return this.Ok(result);

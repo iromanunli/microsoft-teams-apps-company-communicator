@@ -406,7 +406,6 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Test.Controllers
             Assert.Equal(notificationEntity.Teams, sentNotification.TeamNames);
             Assert.Equal(notificationEntity.Rosters, sentNotification.RosterNames);
             Assert.Equal(notificationEntity.Groups, sentNotification.GroupNames);
-            Assert.Equal(notificationEntity.AllUsers, sentNotification.AllUsers);
             Assert.Equal(notificationEntity.SendingStartedDate, sentNotification.SendingStartedDate);
             Assert.Equal(notificationEntity.ErrorMessage, sentNotification.ErrorMessage);
             Assert.Equal(notificationEntity.WarningMessage, sentNotification.WarningMessage);
@@ -447,7 +446,6 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Test.Controllers
                 Teams = new List<string>() { "item1", "item2" },
                 Rosters = new List<string>() { "item1", "item2" },
                 Groups = new List<string>() { "group1", "group2" },
-                AllUsers = true,
                 ErrorMessage = "errorMessage",
                 WarningMessage = "warningMessage",
                 Succeeded = 200,

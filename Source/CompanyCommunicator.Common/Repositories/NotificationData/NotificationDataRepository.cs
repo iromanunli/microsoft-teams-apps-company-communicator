@@ -96,7 +96,6 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Repositories.Notificat
                     Teams = draftNotificationEntity.Teams,
                     Rosters = draftNotificationEntity.Rosters,
                     Groups = draftNotificationEntity.Groups,
-                    AllUsers = draftNotificationEntity.AllUsers,
                     MessageVersion = draftNotificationEntity.MessageVersion,
                     Succeeded = 0,
                     Failed = 0,
@@ -148,8 +147,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Repositories.Notificat
                     IsDraft = true,
                     Teams = notificationEntity.Teams,
                     Groups = notificationEntity.Groups,
-                    Rosters = notificationEntity.Rosters,
-                    AllUsers = notificationEntity.AllUsers,
+                    Rosters = notificationEntity.Rosters
                 };
 
                 if (!string.IsNullOrEmpty(notificationEntity.ImageBase64BlobName))

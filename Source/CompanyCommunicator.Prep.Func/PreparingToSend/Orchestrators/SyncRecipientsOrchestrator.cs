@@ -39,15 +39,6 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
                 FunctionSettings.DefaultRetryOptions,
                 (notification.Id, NotificationStatus.SyncingRecipients));
 
-            // All users.
-            if (notification.AllUsers)
-            {
-                return await context.CallActivityWithRetryAsync<RecipientsInfo>(
-                    FunctionNames.SyncAllUsersActivity,
-                    FunctionSettings.DefaultRetryOptions,
-                    notification);
-            }
-
             // Members of specific teams.
             if (notification.Rosters.Any())
             {

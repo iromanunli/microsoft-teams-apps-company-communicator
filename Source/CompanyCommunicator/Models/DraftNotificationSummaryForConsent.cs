@@ -31,10 +31,5 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Models
         /// Gets or sets Group Names value.
         /// </summary>
         public IEnumerable<string> GroupNames { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the All Users option is selected.
-        /// </summary>
-        public bool AllUsers { get; set; }
     }
 }
