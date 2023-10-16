@@ -1043,14 +1043,14 @@ export const NewMessage = () => {
                     </Combobox>
                   </div>
                 )}
-                <Radio id='radio3' value={AudienceSelection.AllUsers} label={t('SendToAllUsers')} />
-                <div className={cmbStyles.root}>
-                  {selectedRadioButton === AudienceSelection.AllUsers && (
-                    <Text id='radio3Note' role={allUsersAria} className='info-text'>
-                      {t('SendToAllUsersNote')}
-                    </Text>
-                  )}
-                </div>
+                {/*<Radio id='radio3' value={AudienceSelection.AllUsers} label={t('SendToAllUsers')} />*/}
+                {/*<div className={cmbStyles.root}>*/}
+                {/*  {selectedRadioButton === AudienceSelection.AllUsers && (*/}
+                {/*    <Text id='radio3Note' role={allUsersAria} className='info-text'>*/}
+                {/*      {t('SendToAllUsersNote')}*/}
+                {/*    </Text>*/}
+                {/*  )}*/}
+                {/*</div>*/}
                 <Radio id='radio4' value={AudienceSelection.Groups} label={t('SendToGroups')} />
                 {selectedRadioButton === AudienceSelection.Groups && (
                   <div className={cmbStyles.root}>
