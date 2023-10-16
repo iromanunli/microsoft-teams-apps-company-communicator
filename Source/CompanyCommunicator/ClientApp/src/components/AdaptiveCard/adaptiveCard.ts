@@ -40,7 +40,7 @@ export const getInitAdaptiveCard = (titleText: string) => {
       {
         type: 'TextBlock',
         size: 'Small',
-        weight: 'Lighter',    
+        weight: 'Lighter',
         color: 'red',
         text: '',
         wrap: true,
