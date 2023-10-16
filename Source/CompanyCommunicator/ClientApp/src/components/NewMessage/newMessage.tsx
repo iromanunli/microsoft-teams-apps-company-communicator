@@ -259,9 +259,11 @@ export const NewMessage = () => {
           setSelectedRadioButton(AudienceSelection.Rosters);
         } else if (draftMessageDetail.groups.length > 0) {
           setSelectedRadioButton(AudienceSelection.Groups);
-        } else if (draftMessageDetail.allUsers) {
-          setSelectedRadioButton(AudienceSelection.AllUsers);
         }
+
+        // else if (draftMessageDetail.allUsers) {
+        //   setSelectedRadioButton(AudienceSelection.AllUsers);
+        // }
         setMessageState({
           ...messageState,
           id: draftMessageDetail.id,
@@ -446,8 +448,7 @@ export const NewMessage = () => {
     const audPageConditions =
       (teamsSelectedOptions.length > 0 && selectedRadioButton === AudienceSelection.Teams) ||
       (rostersSelectedOptions.length > 0 && selectedRadioButton === AudienceSelection.Rosters) ||
-      (searchSelectedOptions.length > 0 && selectedRadioButton === AudienceSelection.Groups) ||
-      selectedRadioButton === AudienceSelection.AllUsers;
+          (searchSelectedOptions.length > 0 && selectedRadioButton === AudienceSelection.Groups);
 
     if (msgPageConditions && audPageConditions && scheduledSendValidation) {
       return false;
@@ -468,7 +469,6 @@ export const NewMessage = () => {
     let finalSelectedTeams: string[] = [];
     let finalSelectedRosters: string[] = [];
     let finalSelectedGroups: string[] = [];
-    let finalAllUsers: boolean = false;
 
     if (selectedRadioButton === AudienceSelection.Teams) {
       finalSelectedTeams = [
@@ -483,16 +483,12 @@ export const NewMessage = () => {
     if (selectedRadioButton === AudienceSelection.Groups) {
       finalSelectedGroups = [...searchSelectedOptions.map((g) => g.id)];
     }
-    if (selectedRadioButton === AudienceSelection.AllUsers) {
-      finalAllUsers = allUsersState;
-    }
 
     const finalMessage = {
       ...messageState,
       teams: finalSelectedTeams,
       rosters: finalSelectedRosters,
-      groups: finalSelectedGroups,
-      allUsers: finalAllUsers,
+      groups: finalSelectedGroups
     };
 
     setShowMsgDraftingSpinner(true);
@@ -720,13 +716,10 @@ export const NewMessage = () => {
     const input = data.value as keyof typeof AudienceSelection;
     setSelectedRadioButton(AudienceSelection[input]);
 
-    if (AudienceSelection[input] === AudienceSelection.AllUsers) {
-      setAllUsersState(true);
-    } else if (allUsersState) {
+    if (allUsersState) {
       setAllUsersState(false);
     }
 
-    // AudienceSelection[input] === AudienceSelection.AllUsers ? setAllUserAria('alert') : setAllUserAria('none');
     AudienceSelection[input] === AudienceSelection.Groups ? setGroupsAria('alert') : setGroupsAria('none');
   };
 
@@ -1043,15 +1036,7 @@ export const NewMessage = () => {
                     </Combobox>
                   </div>
                 )}
-                {/* <Radio id='radio3' value={AudienceSelection.AllUsers} label={t('SendToAllUsers')} /> */}
-                {/* <div className={cmbStyles.root}> */}
-                {/*  {selectedRadioButton === AudienceSelection.AllUsers && ( */}
-                {/*    <Text id='radio3Note' role={allUsersAria} className='info-text'> */}
-                {/*      {t('SendToAllUsersNote')} */}
-                {/*    </Text> */}
-                {/*  )} */}
-                {/* </div> */}
-                <Radio id='radio4' value={AudienceSelection.Groups} label={t('SendToGroups')} />
+                <Radio id='radio3' value={AudienceSelection.Groups} label={t('SendToGroups')} />
                 {selectedRadioButton === AudienceSelection.Groups && (
                   <div className={cmbStyles.root}>
                     {!canAccessGroups && (
