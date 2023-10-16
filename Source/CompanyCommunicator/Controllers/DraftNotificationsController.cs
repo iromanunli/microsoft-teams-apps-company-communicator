@@ -157,6 +157,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Controllers
                 ImageLink = notification.ImageLink,
                 Summary = notification.Summary,
                 Author = notification.Author,
+                Tags = notification.Tags,
                 ButtonTitle = notification.ButtonTitle,
                 ButtonLink = notification.ButtonLink,
                 CreatedBy = this.HttpContext.User?.Identity?.Name,

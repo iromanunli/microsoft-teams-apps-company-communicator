@@ -52,6 +52,8 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Models
         /// </summary>
         public string ButtonLink { get; set; }
 
+        public string Tags { get; set; }
+
         /// <summary>
         /// Gets or sets the Created DateTime value.
         /// </summary>
