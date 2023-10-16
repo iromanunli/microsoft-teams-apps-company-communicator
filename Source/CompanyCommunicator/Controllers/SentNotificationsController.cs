@@ -228,6 +228,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Controllers
                 Author = notificationEntity.Author,
                 ButtonTitle = notificationEntity.ButtonTitle,
                 ButtonLink = notificationEntity.ButtonLink,
+                Tags = notificationEntity.Tags,
                 CreatedDateTime = notificationEntity.CreatedDate,
                 SentDate = notificationEntity.SentDate,
                 Succeeded = notificationEntity.Succeeded,

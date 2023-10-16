@@ -266,6 +266,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Controllers
                 Summary = notificationEntity.Summary,
                 Author = notificationEntity.Author,
                 ButtonTitle = notificationEntity.ButtonTitle,
+                Tags = notificationEntity.Tags,
                 ButtonLink = notificationEntity.ButtonLink,
                 CreatedDateTime = notificationEntity.CreatedDate,
                 Teams = notificationEntity.Teams,

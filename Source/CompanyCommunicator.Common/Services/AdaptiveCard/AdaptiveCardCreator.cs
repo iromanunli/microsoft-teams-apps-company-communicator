@@ -28,6 +28,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.AdaptiveCard
                 notificationDataEntity.Author,
                 notificationDataEntity.ButtonTitle,
                 notificationDataEntity.ButtonLink,
+                notificationDataEntity.Tags,
                 notificationDataEntity.Id);
         }
 
@@ -49,6 +50,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.AdaptiveCard
             string author,
             string buttonTitle,
             string buttonUrl,
+            string tags,
             string notificationId)
         {
             var version = new AdaptiveSchemaVersion(1, 0);
