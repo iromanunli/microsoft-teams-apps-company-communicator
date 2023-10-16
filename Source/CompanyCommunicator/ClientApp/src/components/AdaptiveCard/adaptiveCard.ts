@@ -40,7 +40,8 @@ export const getInitAdaptiveCard = (titleText: string) => {
       {
         type: 'TextBlock',
         size: 'Small',
-        weight: 'Lighter',
+        weight: 'Lighter',    
+        color: 'red',
         text: '',
         wrap: true,
       },
@@ -80,11 +81,11 @@ export const getCardAuthor = (card: any) => {
 };
 
 export const setCardTag = (card: any, tags?: string) => {
-  card.body[1].text = tags;
+  card.body[4].text = tags;
 };
 
 export const getCardTag = (card: any) => {
-  return card.body[1].text;
+  return card.body[4].text;
 };
 
 export const setCardAuthor = (card: any, author?: string) => {
