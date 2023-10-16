@@ -12,7 +12,7 @@ import { app, dialog } from '@microsoft/teams-js';
 
 import { exportNotification, getSentNotification } from '../../apis/messageListApi';
 import { formatDate, formatDuration, formatNumber } from '../../i18n';
-import { getInitAdaptiveCard, setCardAuthor, setCardBtn, setCardImageLink, setCardSummary, setCardTitle } from '../AdaptiveCard/adaptiveCard';
+import { getInitAdaptiveCard, setCardAuthor, setCardBtn, setCardImageLink, setCardSummary, setCardTag, setCardTitle } from '../AdaptiveCard/adaptiveCard';
 
 export interface IMessageState {
   id: string;
@@ -28,6 +28,7 @@ export interface IMessageState {
   imageLink?: string;
   summary?: string;
   author?: string;
+  tags?: string;
   buttonLink?: string;
   buttonTitle?: string;
   teamNames?: string[];
@@ -122,6 +123,7 @@ export const ViewStatusTask = () => {
   const updateCardData = (msg: IMessageState) => {
     card = getInitAdaptiveCard(msg.title);
     setCardTitle(card, msg.title);
+    setCardTag(card, msg.tags);
     setCardImageLink(card, msg.imageLink);
     setCardSummary(card, msg.summary);
     setCardAuthor(card, msg.author);

@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import { Button, Field, Label, Persona, Spinner, Text } from '@fluentui/react-components';
 import { dialog } from '@microsoft/teams-js';
 import { getConsentSummaries, getDraftNotification, sendDraftNotification } from '../../apis/messageListApi';
-import { getInitAdaptiveCard, setCardAuthor, setCardBtn, setCardImageLink, setCardSummary, setCardTitle } from '../AdaptiveCard/adaptiveCard';
+import { getInitAdaptiveCard, setCardAuthor, setCardBtn, setCardImageLink, setCardSummary, setCardTag, setCardTitle } from '../AdaptiveCard/adaptiveCard';
 import { AvatarShape } from '@fluentui/react-avatar';
 
 export interface IMessageState {
@@ -24,6 +24,7 @@ export interface IMessageState {
   imageLink?: string;
   summary?: string;
   author?: string;
+  tags?: string;
   buttonLink?: string;
   buttonTitle?: string;
   createdBy?: string;
@@ -88,6 +89,7 @@ export const SendConfirmationTask = () => {
   const updateCardData = (msg: IMessageState) => {
     card = getInitAdaptiveCard(msg.title);
     setCardTitle(card, msg.title);
+    setCardTag(card, msg.tags);
     setCardImageLink(card, msg.imageLink);
     setCardSummary(card, msg.summary);
     setCardAuthor(card, msg.author);
