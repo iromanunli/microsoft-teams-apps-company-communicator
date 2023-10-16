@@ -142,7 +142,7 @@ export const NewMessage = () => {
   const [titleErrorMessage, setTitleErrorMessage] = React.useState('');
   const [btnLinkErrorMessage, setBtnLinkErrorMessage] = React.useState('');
   const [showMsgDraftingSpinner, setShowMsgDraftingSpinner] = React.useState(false);
-  const [allUsersAria, setAllUserAria] = React.useState('none');
+  /* const [allUsersAria, setAllUserAria] = React.useState('none'); */
   const [groupsAria, setGroupsAria] = React.useState('none');
   const [cardAreaBorderClass, setCardAreaBorderClass] = React.useState('');
   const [messageState, setMessageState] = React.useState<IMessageState>({
@@ -552,7 +552,7 @@ export const NewMessage = () => {
 
   const onBack = (event: any) => {
     setPageSelection(CurrentPageSelection.CardCreation);
-    setAllUserAria('none');
+    // setAllUserAria('none');
     setGroupsAria('none');
   };
 
@@ -726,7 +726,7 @@ export const NewMessage = () => {
       setAllUsersState(false);
     }
 
-    AudienceSelection[input] === AudienceSelection.AllUsers ? setAllUserAria('alert') : setAllUserAria('none');
+    // AudienceSelection[input] === AudienceSelection.AllUsers ? setAllUserAria('alert') : setAllUserAria('none');
     AudienceSelection[input] === AudienceSelection.Groups ? setGroupsAria('alert') : setGroupsAria('none');
   };
 
@@ -1043,14 +1043,14 @@ export const NewMessage = () => {
                     </Combobox>
                   </div>
                 )}
-                {/*<Radio id='radio3' value={AudienceSelection.AllUsers} label={t('SendToAllUsers')} />*/}
-                {/*<div className={cmbStyles.root}>*/}
-                {/*  {selectedRadioButton === AudienceSelection.AllUsers && (*/}
-                {/*    <Text id='radio3Note' role={allUsersAria} className='info-text'>*/}
-                {/*      {t('SendToAllUsersNote')}*/}
-                {/*    </Text>*/}
-                {/*  )}*/}
-                {/*</div>*/}
+                {/* <Radio id='radio3' value={AudienceSelection.AllUsers} label={t('SendToAllUsers')} /> */}
+                {/* <div className={cmbStyles.root}> */}
+                {/*  {selectedRadioButton === AudienceSelection.AllUsers && ( */}
+                {/*    <Text id='radio3Note' role={allUsersAria} className='info-text'> */}
+                {/*      {t('SendToAllUsersNote')} */}
+                {/*    </Text> */}
+                {/*  )} */}
+                {/* </div> */}
                 <Radio id='radio4' value={AudienceSelection.Groups} label={t('SendToGroups')} />
                 {selectedRadioButton === AudienceSelection.Groups && (
                   <div className={cmbStyles.root}>
