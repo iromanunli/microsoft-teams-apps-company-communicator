@@ -176,15 +176,6 @@ export const SendConfirmationTask = () => {
           <ul className='ul-no-bullets'>{getItemList(consentState.groupNames, 'Group', 'circular')}</ul>
         </div>
       );
-    } else if (consentState.allUsers) {
-      return (
-        <div key='allUsers' style={{ paddingBottom: '16px' }}>
-          <Label>{t('AllUsersLabel')}</Label>
-          <div>
-            <Text className='info-text'>{t('SendToAllUsersNote')}</Text>
-          </div>
-        </div>
-      );
     } else {
       return <div></div>;
     }

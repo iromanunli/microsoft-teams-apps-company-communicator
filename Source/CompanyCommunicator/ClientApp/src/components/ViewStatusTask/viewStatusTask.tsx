@@ -189,12 +189,6 @@ export const ViewStatusTask = () => {
           <ul className='ul-no-bullets'>{getItemList(messageState.groupNames, 'Group', 'circular')}</ul>
         </Field>
       );
-    } else if (messageState.allUsers) {
-      return (
-        <>
-          <Text size={500}>{t('SendToAllUsers')}</Text>
-        </>
-      );
     } else {
       return <div></div>;
     }
