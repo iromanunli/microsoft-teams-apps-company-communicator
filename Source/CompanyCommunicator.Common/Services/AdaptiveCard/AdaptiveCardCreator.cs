@@ -6,6 +6,9 @@
 namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.AdaptiveCard
 {
     using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Text;
     using AdaptiveCards;
     using Microsoft.Teams.Apps.CompanyCommunicator.Common.Repositories.NotificationData;
 
@@ -53,7 +56,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.AdaptiveCard
             string tags,
             string notificationId)
         {
-            var version = new AdaptiveSchemaVersion(1, 0);
+            var version = new AdaptiveSchemaVersion(1, 3);
             AdaptiveCard card = new AdaptiveCard(version);
 
             card.Body.Add(new AdaptiveTextBlock()
@@ -66,9 +69,27 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.AdaptiveCard
 
             if (!string.IsNullOrWhiteSpace(tags))
             {
+                List<string> tagList = new List<string>();
+
+                if (tags.Contains(","))
+                {
+                    tagList.AddRange(tags.Split(","));
+                }
+                else
+                {
+                    tagList.Add(tags);
+                }
+
+                StringBuilder tagParse = new StringBuilder();
+
+                foreach (var t in tagList)
+                {
+                    tagParse.Append(string.Format("<at>{0}</at>", t.Trim()));
+                }
+
                 card.Body.Add(new AdaptiveTextBlock()
                 {
-                    Text = tags,
+                    Text = tagParse.ToString(),
                     Size = AdaptiveTextSize.Small,
                     Weight = AdaptiveTextWeight.Lighter,
                     Wrap = true,

@@ -292,7 +292,7 @@ export const NewMessage = () => {
     const imgUrl = getBaseUrl() + '/image/imagePlaceholder.png';
     setCardImageLink(card, imgUrl);
     setCardSummary(card, summaryAsString);
-    setCardAuthor(card, authorAsString);    
+    setCardAuthor(card, authorAsString);
     setCardBtn(card, buttonTitleAsString, 'https://adaptivecards.io');
   };
 
