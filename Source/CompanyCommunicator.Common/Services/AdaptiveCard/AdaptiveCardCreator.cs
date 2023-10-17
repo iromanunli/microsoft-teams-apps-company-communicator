@@ -84,7 +84,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.AdaptiveCard
 
                 foreach (var t in tagList)
                 {
-                    tagParse.Append(string.Format("<at>{0}</at>", t.Trim()));
+                    tagParse.Append(string.Format("**{0}**\t", t.Trim()));
                 }
 
                 card.Body.Add(new AdaptiveTextBlock()
