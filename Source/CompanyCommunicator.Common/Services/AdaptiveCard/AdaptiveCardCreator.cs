@@ -64,6 +64,17 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.AdaptiveCard
                 Wrap = true,
             });
 
+            if (!string.IsNullOrWhiteSpace(tags))
+            {
+                card.Body.Add(new AdaptiveTextBlock()
+                {
+                    Text = tags,
+                    Size = AdaptiveTextSize.Small,
+                    Weight = AdaptiveTextWeight.Lighter,
+                    Wrap = true,
+                });
+            }
+
             if (!string.IsNullOrWhiteSpace(imageUrl))
             {
                 var img = new AdaptiveImageWithLongUrl()
