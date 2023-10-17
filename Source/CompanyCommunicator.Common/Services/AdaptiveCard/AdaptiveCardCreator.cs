@@ -82,9 +82,14 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.AdaptiveCard
 
                 StringBuilder tagParse = new StringBuilder();
 
-                foreach (var t in tagList)
+                for (int i = 0; i < tagList.Count; i++)
                 {
-                    tagParse.Append(string.Format("**{0}**\t", t.Trim()));
+                    tagParse.Append(string.Format("**{0}**", tagList[0].Trim()));
+
+                    if (i > 0)
+                    {
+                        tagParse.Append("  --  ");
+                    }
                 }
 
                 card.Body.Add(new AdaptiveTextBlock()
