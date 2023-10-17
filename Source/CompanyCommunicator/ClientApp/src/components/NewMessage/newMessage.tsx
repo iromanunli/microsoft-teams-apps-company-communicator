@@ -183,10 +183,10 @@ export const NewMessage = () => {
       setDefaultCard(card);
     } else {
       setCardTitle(card, messageState.title);
+      setCardTag(card, messageState.tags);
       setCardImageLink(card, messageState.imageLink);
       setCardSummary(card, messageState.summary);
       setCardAuthor(card, messageState.author);
-      setCardTag(card, messageState.tags);
       setCardBtn(card, messageState.buttonTitle, messageState.buttonLink);
     }
     updateAdaptiveCard();
@@ -288,11 +288,11 @@ export const NewMessage = () => {
     const buttonTitleAsString = t('ButtonTitle');
     const tagsAsString = t('Tags');
     setCardTitle(card, titleAsString);
+    setCardTag(card, tagsAsString);
     const imgUrl = getBaseUrl() + '/image/imagePlaceholder.png';
     setCardImageLink(card, imgUrl);
     setCardSummary(card, summaryAsString);
-    setCardAuthor(card, authorAsString);
-    setCardTag(card, tagsAsString);
+    setCardAuthor(card, authorAsString);    
     setCardBtn(card, buttonTitleAsString, 'https://adaptivecards.io');
   };
 
