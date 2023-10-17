@@ -84,7 +84,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.AdaptiveCard
 
                 for (int i = 0; i < tagList.Count; i++)
                 {
-                    tagParse.Append(string.Format("**{0}**", tagList[0].Trim()));
+                    tagParse.Append(string.Format("**{0}**", tagList[i].Trim()));
 
                     if (i > 0)
                     {
