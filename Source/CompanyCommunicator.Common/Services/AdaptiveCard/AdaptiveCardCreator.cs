@@ -143,7 +143,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.AdaptiveCard
                 card.Actions.Add(new AdaptiveOpenUrlAction()
                 {
                     Title = buttonTitle,
-                    Url = new Uri(string.Format("https://unlimitechredirector.azurewebsites.net/?redirect={0}", buttonUrl), UriKind.RelativeOrAbsolute),
+                    Url = new Uri(string.Format("https://unlimitechredirector.azurewebsites.net/?redirect={0}&notificationId={1}", buttonUrl, notificationId), UriKind.RelativeOrAbsolute),
                 });
             }
 
