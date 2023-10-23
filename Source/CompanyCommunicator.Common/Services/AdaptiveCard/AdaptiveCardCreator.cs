@@ -137,13 +137,15 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.AdaptiveCard
                 });
             }
 
+            string redirectURL = Environment.GetEnvironmentVariable("RedirectURL");
+
             if (!string.IsNullOrWhiteSpace(buttonTitle)
                 && !string.IsNullOrWhiteSpace(buttonUrl))
             {
                 card.Actions.Add(new AdaptiveOpenUrlAction()
                 {
                     Title = buttonTitle,
-                    Url = new Uri(string.Format("https://unlimitechredirector.azurewebsites.net/?redirect={0}&notificationId={1}", buttonUrl, notificationId), UriKind.RelativeOrAbsolute),
+                    Url = new Uri(string.Format(redirectURL, buttonUrl, notificationId), UriKind.RelativeOrAbsolute),
                 });
             }
 
