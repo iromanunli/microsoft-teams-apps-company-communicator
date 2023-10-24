@@ -25,11 +25,11 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Redirector.Pages
 
             TableClient tableClient = new TableClient(storAccount, "Usage");
 
-            TableEntity tableEntity = new TableEntity(Guid.NewGuid().ToString(), notificationId)
+            TableEntity tableEntity = new TableEntity(Guid.NewGuid().ToString(), notificationId == null ? "DRAFT" : notificationId)
             {
                 {"entryDate", entryDate.ToUniversalTime() },
                 {"userId", userId  },
-                {"notificationId", notificationId }
+                {"notificationId", notificationId == null ? "DRAFT" : notificationId }
             };
 
             tableClient.AddEntity(tableEntity);
