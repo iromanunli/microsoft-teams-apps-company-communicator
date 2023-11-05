@@ -71,7 +71,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Orchestrator
                 await context.CallActivityWithRetryAsync(
                     FunctionNames.UploadActivity,
                     FunctionSettings.DefaultRetryOptions,
-                    (sentNotificationDataEntity, metaData, exportDataEntity.FileName));
+                    (sentNotificationDataEntity, metaData, "TEST", exportDataEntity.FileName));
 
                 if (!context.IsReplaying)
                 {
