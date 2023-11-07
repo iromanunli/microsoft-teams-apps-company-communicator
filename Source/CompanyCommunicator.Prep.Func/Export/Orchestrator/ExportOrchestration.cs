@@ -6,7 +6,11 @@
 namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Orchestrator
 {
     using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.Azure.Cosmos.Table;
     using Microsoft.Azure.WebJobs;
     using Microsoft.Azure.WebJobs.Extensions.DurableTask;
     using Microsoft.Extensions.Logging;
@@ -66,6 +70,23 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Orchestrator
                 if (!context.IsReplaying)
                 {
                     log.LogInformation("About to start file upload.");
+                }
+
+                List<Usage> usages = new List<Usage>();
+
+                CloudStorageAccount storageAccount = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("StorageAccountConnectionString"));
+                CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+                CloudTable usageTable = tableClient.GetTableReference(Environment.GetEnvironmentVariable("StorageAccountName"));
+
+#pragma warning disable SA1119 // Statement should not use unnecessary parenthesis
+                var query = (from usage in usageTable.CreateQuery<Usage>()
+                             where sentNotificationDataEntity.Id == usage.NotificationId
+                             select usage);
+#pragma warning restore SA1119 // Statement should not use unnecessary parenthesis
+
+                foreach (Usage u in query)
+                {
+                    usages.Add(u);
                 }
 
                 await context.CallActivityWithRetryAsync(
