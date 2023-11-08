@@ -112,7 +112,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
 
                     var usos = uploadData.usages.Split(";");
 
-                    await foreach(string u in usos)
+                    foreach(string u in usos)
                     {
                         string tmpu = u.Replace("-", ",");
                         await csv.WriteRecordsAsync(tmpu);
