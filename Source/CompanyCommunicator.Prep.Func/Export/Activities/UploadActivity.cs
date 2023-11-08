@@ -6,10 +6,12 @@
 namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
     using System.IO.Compression;
     using System.Linq;
+    using System.Security.Cryptography;
     using System.Threading.Tasks;
     using CsvHelper;
     using global::Azure.Storage.Blobs.Models;
@@ -57,7 +59,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [FunctionName(FunctionNames.UploadActivity)]
         public async Task UploadActivityAsync(
-            [ActivityTrigger](NotificationDataEntity sentNotificationDataEntity, Metadata metadata, string fileName) uploadData)
+            [ActivityTrigger](NotificationDataEntity sentNotificationDataEntity, Metadata metadata, string usages, string fileName) uploadData)
         {
             if (uploadData.sentNotificationDataEntity == null)
             {
@@ -94,6 +96,27 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
                     csv.WriteHeader(typeof(Metadata));
                     await csv.NextRecordAsync();
                     csv.WriteRecord(uploadData.metadata);
+                }
+
+                // metadata CSV creation.
+                var metadataUsageFileName = string.Concat("Visitas publicaciones", ".csv");
+                var metadataUsageFile = archive.CreateEntry(metadataUsageFileName, CompressionLevel.Optimal);
+                using (var entryStream = metadataUsageFile.Open())
+                {
+                    using var writer = new StreamWriter(entryStream, System.Text.Encoding.UTF8);
+                    using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+                    // var metadataMap = new MetadataMap(this.localizer);
+                    // csv.Configuration.RegisterClassMap(metadataMap);
+                    csv.WriteHeader(typeof(Usage));
+                    await csv.NextRecordAsync();
+
+                    var usos = uploadData.usages.Split(";");
+
+                    foreach (string u in usos)
+                    {
+                        string tmpu = u.Replace("-", ",");
+                        csv.WriteRecord(tmpu);
+                    }
                 }
 
                 // message delivery csv creation.

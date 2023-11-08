@@ -9,6 +9,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Orchestrator
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
+    using System.Text;
     using System.Threading.Tasks;
     using Microsoft.Azure.Cosmos.Table;
     using Microsoft.Azure.WebJobs;
@@ -72,7 +73,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Orchestrator
                     log.LogInformation("About to start file upload.");
                 }
 
-                List<Usage> usages = new List<Usage>();
+                StringBuilder usages = new StringBuilder();
 
                 CloudStorageAccount storageAccount = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("StorageAccountConnectionString"));
                 CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
@@ -86,13 +87,13 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Orchestrator
 
                 foreach (Usage u in query)
                 {
-                    usages.Add(u);
+                    usages.AppendFormat("{0}-{1}-{2};", u.NotificationId, u.UserId, u.entryDate);
                 }
 
                 await context.CallActivityWithRetryAsync(
                     FunctionNames.UploadActivity,
                     FunctionSettings.DefaultRetryOptions,
-                    (sentNotificationDataEntity, metaData, exportDataEntity.FileName));
+                    (sentNotificationDataEntity, metaData, usages.ToString(), exportDataEntity.FileName));
 
                 if (!context.IsReplaying)
                 {

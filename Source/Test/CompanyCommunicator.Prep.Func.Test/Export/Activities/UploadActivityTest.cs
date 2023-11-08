@@ -100,7 +100,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Test.Export.Activit
             var activityInstance = this.GetUploadActivity();
 
             // Act
-            Func<Task> task = async () => await activityInstance.UploadActivityAsync((notificationDataEntity, metaData, fileName));
+            Func<Task> task = async () => await activityInstance.UploadActivityAsync((notificationDataEntity, metaData, "",fileName));
 
             // Assert
             await task.Should().ThrowAsync<ArgumentNullException>();
@@ -134,7 +134,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Test.Export.Activit
             this.userDataStream.Setup(x => x.GetTeamDataStreamAsync(It.IsAny<string>(), It.IsAny<string>())).Returns(teamDatalist.ToAsyncEnumerable);
 
             // Act
-            await activityInstance.UploadActivityAsync((notificationData, metaData, this.fileName));
+            await activityInstance.UploadActivityAsync((notificationData, metaData, "", this.fileName));
 
             // Assert
             this.userDataStream.Verify(x => x.GetTeamDataStreamAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
@@ -168,7 +168,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Test.Export.Activit
             this.userDataStream.Setup(x => x.GetUserDataStreamAsync(It.IsAny<string>(), It.IsAny<string>())).Returns(userDatalist.ToAsyncEnumerable);
 
             // Act
-            await activityInstance.UploadActivityAsync((notificationData, metaData, this.fileName));
+            await activityInstance.UploadActivityAsync((notificationData, metaData,"", this.fileName));
 
             // Assert
             this.userDataStream.Verify(x => x.GetUserDataStreamAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Once);

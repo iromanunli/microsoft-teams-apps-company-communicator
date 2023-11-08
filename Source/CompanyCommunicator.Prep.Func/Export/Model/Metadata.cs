@@ -5,7 +5,9 @@
 
 namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Model
 {
+    using Dynamitey.DynamicObjects;
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Metadata model class.
