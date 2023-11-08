@@ -73,22 +73,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Orchestrator
                     log.LogInformation("About to start file upload.");
                 }
 
-                StringBuilder usages = new StringBuilder();
-
-                CloudStorageAccount storageAccount = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("StorageAccountConnectionString"));
-                CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
-                CloudTable usageTable = tableClient.GetTableReference("Usage");
-
-#pragma warning disable SA1119 // Statement should not use unnecessary parenthesis
-                var query = (from usage in usageTable.CreateQuery<Usage>()
-                             where sentNotificationDataEntity.Id == usage.NotificationId
-                             select usage);
-#pragma warning restore SA1119 // Statement should not use unnecessary parenthesis
-
-                foreach (Usage u in query)
-                {
-                    usages.AppendFormat("{0}-{1}-{2};", u.NotificationId, u.UserId, u.entryDate);
-                }
+                string usages = QueryUsage.QueryData(sentNotificationDataEntity.Id);
 
                 await context.CallActivityWithRetryAsync(
                     FunctionNames.UploadActivity,
