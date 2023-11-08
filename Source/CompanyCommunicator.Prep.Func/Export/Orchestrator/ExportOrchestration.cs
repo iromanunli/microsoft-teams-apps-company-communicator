@@ -77,7 +77,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Orchestrator
 
                 CloudStorageAccount storageAccount = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("StorageAccountConnectionString"));
                 CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
-                CloudTable usageTable = tableClient.GetTableReference(Environment.GetEnvironmentVariable("StorageAccountName"));
+                CloudTable usageTable = tableClient.GetTableReference("Usage");
 
 #pragma warning disable SA1119 // Statement should not use unnecessary parenthesis
                 var query = (from usage in usageTable.CreateQuery<Usage>()
