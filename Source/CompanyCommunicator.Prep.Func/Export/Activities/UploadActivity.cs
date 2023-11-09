@@ -112,7 +112,8 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
                     csv.Configuration.AutoMap<Usos>();
 
                     csv.WriteHeader<Usos>();
-                    csv.WriteRecords(uploadData.lstUsos);
+                    await csv.NextRecordAsync();
+                    //csv.WriteRecords(uploadData.lstUsos);
                 }
 
                 // message delivery csv creation.
