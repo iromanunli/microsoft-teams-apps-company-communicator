@@ -108,7 +108,8 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
                     using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
                     // var metadataMap = new MetadataMap(this.localizer);
                     // csv.Configuration.RegisterClassMap(metadataMap);
-                    csv.WriteField("notificationId, userId, entryDate");
+                    csv.WriteRecords("notificationId, userId, entryDate");
+                    await csv.NextRecordAsync();
 
                     var usos = uploadData.usages.ToString().Replace("***","").Split(";");
 
@@ -116,7 +117,8 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
                     {
                         string tmpu = u.Replace("-", ",");
 
-                        csv.WriteField(tmpu);
+                        csv.WriteRecords(tmpu);
+                        await csv.NextRecordAsync();
                     }
                 }
 
