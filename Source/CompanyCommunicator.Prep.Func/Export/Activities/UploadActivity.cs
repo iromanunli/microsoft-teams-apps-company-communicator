@@ -115,7 +115,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
                     await csv.NextRecordAsync();
 
                     csv.WriteField(uploadData.lstUsos.Count);
-                    //csv.WriteRecords(uploadData.lstUsos);
+                    await csv.WriteRecordsAsync(uploadData.lstUsos);
                 }
 
                 // message delivery csv creation.
