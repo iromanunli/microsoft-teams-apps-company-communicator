@@ -21,6 +21,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
     using Microsoft.Teams.Apps.CompanyCommunicator.Common;
     using Microsoft.Teams.Apps.CompanyCommunicator.Common.Clients;
     using Microsoft.Teams.Apps.CompanyCommunicator.Common.Repositories.NotificationData;
+    using Microsoft.Teams.Apps.CompanyCommunicator.Common.Repositories.SentNotificationData;
     using Microsoft.Teams.Apps.CompanyCommunicator.Common.Resources;
     using Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Mappers;
     using Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Model;
@@ -112,10 +113,11 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
 
                     var usos = uploadData.usages.Split(";");
 
-                    foreach(string u in usos)
+                    foreach (string u in usos)
                     {
                         string tmpu = u.Replace("-", ",");
-                        await csv.WriteRecordsAsync(tmpu);
+
+                        csv.WriteField(tmpu);
                     }
                 }
 
