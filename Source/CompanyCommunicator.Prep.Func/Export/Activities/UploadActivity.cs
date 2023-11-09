@@ -113,6 +113,8 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
 
                     csv.WriteHeader<Usos>();
                     await csv.NextRecordAsync();
+
+                    csv.WriteField(uploadData.lstUsos.Count);
                     //csv.WriteRecords(uploadData.lstUsos);
                 }
 
