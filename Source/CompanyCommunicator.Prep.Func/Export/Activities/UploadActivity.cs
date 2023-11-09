@@ -111,19 +111,13 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
                     csv.WriteField("notificationId, userId, entryDate");
                     await csv.NextRecordAsync();
 
-                    if (uploadData.usages.Contains("\""))
-                    {
-                        uploadData.usages = uploadData.usages.Replace("\"", string.Empty);
-                    }
-
-                    var usos = uploadData.usages.ToString().Replace("***", string.Empty).Split(";");
+                    var usos = uploadData.usages.ToString().Split(";");
 
                     foreach (string u in usos)
                     {
                         string tmpu = u.Replace("-", ",");
 
-                        csv.WriteField(tmpu);
-                        await csv.NextRecordAsync();
+                        csv.WriteRecords(tmpu);
                     }
                 }
 
