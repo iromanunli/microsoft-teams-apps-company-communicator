@@ -15,6 +15,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
     using System.Threading.Tasks;
     using CsvHelper;
     using global::Azure.Storage.Blobs.Models;
+    using Microsoft.Azure.Amqp.Framing;
     using Microsoft.Azure.WebJobs;
     using Microsoft.Azure.WebJobs.Extensions.DurableTask;
     using Microsoft.Extensions.Localization;
@@ -60,7 +61,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [FunctionName(FunctionNames.UploadActivity)]
         public async Task UploadActivityAsync(
-            [ActivityTrigger](NotificationDataEntity sentNotificationDataEntity, Metadata metadata, string usages, string fileName) uploadData)
+            [ActivityTrigger] (NotificationDataEntity sentNotificationDataEntity, Metadata metadata, string usages, string fileName) uploadData)
         {
             if (uploadData.sentNotificationDataEntity == null)
             {
@@ -106,19 +107,28 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
                 {
                     using var writer = new StreamWriter(entryStream, System.Text.Encoding.UTF8);
                     using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-                    // var metadataMap = new MetadataMap(this.localizer);
-                    // csv.Configuration.RegisterClassMap(metadataMap);
-                    csv.WriteField("notificationId, userId, entryDate");
-                    await csv.NextRecordAsync();
 
                     var usos = uploadData.usages.ToString().Split(";");
 
+                    List<Usos> lstUsos = new List<Usos>();
+
                     foreach (string u in usos)
                     {
-                        string tmpu = u.Replace("-", ",");
+                        var tmpu = u.Replace("-", ",").Split(",");
 
-                        csv.WriteRecords(tmpu);
+                        lstUsos.Add(new Usos()
+                        {
+                            notificationId = tmpu[0],
+                            userId = tmpu[1],
+                            entryDate = tmpu[2],
+                        });
                     }
+
+                    csv.Configuration.HasHeaderRecord = true;
+                    csv.Configuration.AutoMap<Usos>();
+
+                    csv.WriteHeader<Usos>();
+                    csv.WriteRecords(lstUsos);
                 }
 
                 // message delivery csv creation.
@@ -156,5 +166,12 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
             memorystream.Position = 0;
             await blob.UploadAsync(memorystream, true);
         }
+    } 
+
+    public class Usos
+    {
+        public string notificationId { get; set; }
+        public string userId { get; set; }
+        public string entryDate { get; set; }
     }
 }
