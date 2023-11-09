@@ -108,24 +108,22 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
                     using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
                     // var metadataMap = new MetadataMap(this.localizer);
                     // csv.Configuration.RegisterClassMap(metadataMap);
-                    csv.WriteHeader(typeof(Uso));
+                    csv.WriteField("notificationId, userId, entryDate");
                     await csv.NextRecordAsync();
 
-                    var usos = uploadData.usages.ToString().Replace("***","").Replace("\"", "").Split(";");
+                    if (uploadData.usages.Contains("\""))
+                    {
+                        uploadData.usages = uploadData.usages.Replace("\"", string.Empty);
+                    }
+
+                    var usos = uploadData.usages.ToString().Replace("***", string.Empty).Split(";");
 
                     foreach (string u in usos)
                     {
                         string tmpu = u.Replace("-", ",");
-                        var valores = tmpu.Split(',');
 
-                        Uso data = new Uso()
-                        {
-                            notificationId = valores[0],
-                            userId = valores[1],
-                            entryDate = Convert.ToDateTime(valores[2]),
-                        };
-
-                        csv.WriteRecord(data);
+                        csv.WriteField(tmpu);
+                        await csv.NextRecordAsync();
                     }
                 }
 
@@ -164,12 +162,5 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
             memorystream.Position = 0;
             await blob.UploadAsync(memorystream, true);
         }
-    }
-
-    public class Uso
-    {
-        public string notificationId { get; set; }
-        public string userId { get; set; }
-        public DateTime entryDate { get; set; }
     }
 }
