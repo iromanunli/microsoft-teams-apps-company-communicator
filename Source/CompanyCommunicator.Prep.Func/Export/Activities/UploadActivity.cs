@@ -108,10 +108,9 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
                     using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
                     // var metadataMap = new MetadataMap(this.localizer);
                     // csv.Configuration.RegisterClassMap(metadataMap);
-                    csv.WriteHeader(typeof(Usage));
-                    await csv.NextRecordAsync();
+                    csv.WriteField("notificationId, userId, entryDate");
 
-                    var usos = uploadData.usages.Split(";");
+                    var usos = uploadData.usages.ToString().Replace("***","").Split(";");
 
                     foreach (string u in usos)
                     {

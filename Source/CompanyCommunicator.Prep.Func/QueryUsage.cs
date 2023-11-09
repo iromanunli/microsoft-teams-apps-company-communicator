@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
+﻿using Azure.Data.Tables;
+using System;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Azure.Data.Tables;
 
 namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func
 {
@@ -20,10 +16,14 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func
 
             var queryResult = table.Query<Usage>(filter: $"notificationId eq '{notificationId}'").ToArray();
 
+            usages.Append("***");
+
             foreach (Usage u in queryResult)
             {
                 usages.AppendFormat("{0}-{1}-{2};", u.notificationId, u.userId, u.entryDate);
             }
+
+            usages.Append("***");
 
             return usages.ToString();
         }
