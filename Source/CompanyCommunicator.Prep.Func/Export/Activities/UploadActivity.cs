@@ -61,7 +61,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [FunctionName(FunctionNames.UploadActivity)]
         public async Task UploadActivityAsync(
-            [ActivityTrigger] (NotificationDataEntity sentNotificationDataEntity, Metadata metadata, string usages, string fileName) uploadData)
+            [ActivityTrigger] (NotificationDataEntity sentNotificationDataEntity, Metadata metadata, List<Usos> lstUsos, string fileName) uploadData)
         {
             if (uploadData.sentNotificationDataEntity == null)
             {
@@ -108,27 +108,11 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
                     using var writer = new StreamWriter(entryStream, System.Text.Encoding.UTF8);
                     using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
 
-                    var usos = uploadData.usages.ToString().Split(";");
-
-                    List<Usos> lstUsos = new List<Usos>();
-
-                    foreach (string u in usos)
-                    {
-                        var tmpu = u.Replace("-", ",").Split(",");
-
-                        lstUsos.Add(new Usos()
-                        {
-                            notificationId = tmpu[0],
-                            userId = tmpu[1],
-                            entryDate = tmpu[2],
-                        });
-                    }
-
                     csv.Configuration.HasHeaderRecord = true;
                     csv.Configuration.AutoMap<Usos>();
 
                     csv.WriteHeader<Usos>();
-                    csv.WriteRecords(lstUsos);
+                    csv.WriteRecords(uploadData.lstUsos);
                 }
 
                 // message delivery csv creation.
@@ -172,6 +156,6 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
     {
         public string notificationId { get; set; }
         public string userId { get; set; }
-        public string entryDate { get; set; }
+        public DateTime entryDate { get; set; }
     }
 }

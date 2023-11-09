@@ -16,6 +16,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Orchestrator
     using Microsoft.Azure.WebJobs.Extensions.DurableTask;
     using Microsoft.Extensions.Logging;
     using Microsoft.Teams.Apps.CompanyCommunicator.Common.Repositories.ExportData;
+    using Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities;
     using Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Model;
     using Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend;
 
@@ -73,12 +74,12 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Orchestrator
                     log.LogInformation("About to start file upload.");
                 }
 
-                string usages = QueryUsage.QueryData(sentNotificationDataEntity.Id);
+                List<Usos> lstUsos = QueryUsage.QueryData(sentNotificationDataEntity.Id);
 
                 await context.CallActivityWithRetryAsync(
                     FunctionNames.UploadActivity,
                     FunctionSettings.DefaultRetryOptions,
-                    (sentNotificationDataEntity, metaData, usages.ToString(), exportDataEntity.FileName));
+                    (sentNotificationDataEntity, metaData, lstUsos, exportDataEntity.FileName));
 
                 if (!context.IsReplaying)
                 {
