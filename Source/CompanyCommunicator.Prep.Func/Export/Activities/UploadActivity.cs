@@ -111,7 +111,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.Export.Activities
                     csv.WriteHeader(typeof(Uso));
                     await csv.NextRecordAsync();
 
-                    var usos = uploadData.usages.ToString().Replace("***","").Split(";");
+                    var usos = uploadData.usages.ToString().Replace("***","").Replace("\"", "").Split(";");
 
                     foreach (string u in usos)
                     {
