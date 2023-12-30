@@ -277,6 +277,7 @@
   },
   "variables": {
     "botName": "[parameters('baseResourceName')]",
+    "redirectorName": "[concat(parameters('baseResourceName'), '-redirector')]",
     "authorBotName": "[concat(parameters('baseResourceName'), '-author')]",
     "botAppName": "[parameters('baseResourceName')]",
     "botAppDomain": "[concat(variables('botAppName'), '.azurewebsites.net')]",
@@ -671,6 +672,94 @@
     {
       "apiVersion": "2016-08-01",
       "type": "Microsoft.Web/sites",
+      "name": "[variables('redirectorName')]",
+      "location": "[parameters('location')]",
+      "kind": "app",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": {
+        "name": "[variables('redirectorName')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+        "enabled": true,
+        "reserved": false,
+        "clientAffinityEnabled": true,
+        "clientCertEnabled": false,
+        "hostNamesDisabled": false,
+        "containerSize": 0,
+        "dailyMemoryTimeQuota": 0,
+        "httpsOnly": true,
+        "siteConfig": {
+          "ftpsState": "Disabled",
+          "alwaysOn": "[not(variables('isSharedPlan'))]",
+          "cors": {
+            "supportCredentials": true,
+            "allowedOrigins": [
+              "[concat('https://', variables('frontDoorDomain'))]"
+            ]
+          },
+          "metadata": [
+            {
+              "name": "CURRENT_STACK",
+              "value": "dotnet"
+            }
+          ],
+          "netFrameworkVersion": "v6.0.100"
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+        "[resourceId('Microsoft.Insights/components', variables('appInsightsName'))]",
+        "[resourceId('Microsoft.ServiceBus/namespaces', variables('serviceBusNamespaceName'))]",
+        "[resourceId('Microsoft.Web/sites', variables('prepFunctionAppName'))]",
+        "[resourceId('Microsoft.Web/sites', variables('sendFunctionAppName'))]",
+        "[resourceId('Microsoft.Web/sites', variables('dataFunctionAppName'))]"
+      ],
+      "resources": [
+        {
+          "apiVersion": "2015-08-01",
+          "name": "appsettings",
+          "type": "config",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', variables('botAppName'))]",
+            "[resourceId('Microsoft.KeyVault/vaults/', variables('keyVaultName'))]",
+            "[resourceId('Microsoft.KeyVault/vaults/secrets', variables('keyVaultName'), variables('StorageAccountSecretName'))]",
+            "[resourceId('Microsoft.KeyVault/vaults/secrets', variables('keyVaultName'), variables('ServiceBusSecretName'))]"
+          ],
+          "properties": {
+            "PROJECT": "Source/Microsoft.Teams.Apps.CompanyCommunicator.Redirector/Microsoft.Teams.Apps.CompanyCommunicator.Redirector.csproj",
+            "SITE_ROLE": "app",
+            "i18n:DefaultCulture": "[variables('i18n:DefaultCulture')]",
+            "i18n:SupportedCultures": "[variables('i18n:SupportedCultures')]",
+            "StorageAccount":"[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')),'2015-05-01-preview').key1)]",
+            "WEBSITE_LOAD_CERTIFICATES": "*",
+            "APPINSIGHTS_INSTRUMENTATIONKEY": "[concat('@Microsoft.KeyVault(SecretUri=', reference(variables('AppInsightsSecretResourceId'), '2015-06-01').secretUriWithVersion, ')')]",
+            "WEBSITE_NODE_DEFAULT_VERSION": "16.13.0",
+            "WEBSITE_NPM_DEFAULT_VERSION": "8.19.2",
+            "DOTNET_ADD_GLOBAL_TOOLS_TO_PATH": "false"
+          }
+        },
+        {
+          "apiVersion": "2016-08-01",
+          "name": "web",
+          "type": "sourcecontrols",
+          "condition": "[not(empty(parameters('gitRepoUrl')))]",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', variables('botAppName'))]",
+            "[resourceId('Microsoft.Web/sites/config', variables('botAppName'), 'appsettings')]"
+          ],
+          "properties": {
+            "RepoUrl": "[parameters('gitRepoUrl')]",
+            "branch": "[parameters('gitBranch')]",
+            "IsManualIntegration": true
+          }
+        }
+      ]
+    },
+    {
+      "apiVersion": "2016-08-01",
+      "type": "Microsoft.Web/sites",
       "name": "[variables('prepFunctionAppName')]",
       "location": "[parameters('location')]",
       "kind": "functionapp",
@@ -723,6 +812,7 @@
             "ServiceBusConnection": "[concat('@Microsoft.KeyVault(SecretUri=', reference(variables('ServiceBusSecretResourceId'),'2015-06-01').secretUriWithVersion, ')')]",
             "ServiceBusNamespace": "[concat(variables('serviceBusNamespaceName'),'.servicebus.windows.net')]",
             "StorageAccountName": "[variables('storageAccountName')]",
+            "RedirectURL": "[concat('https://', variables('redirectorName'), '.azurewebsites.net/?redirect={0}&notificationId={1}')]",
             "UseManagedIdentity": "true",
             "UseCertificate": "false",
             "WEBSITE_LOAD_CERTIFICATES": "*",

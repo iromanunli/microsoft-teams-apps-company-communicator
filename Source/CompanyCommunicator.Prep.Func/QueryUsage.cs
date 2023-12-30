@@ -16,6 +16,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func
 
             var serviceClient = new TableServiceClient(Environment.GetEnvironmentVariable("StorageAccountConnectionString"));
             TableClient table = serviceClient.GetTableClient("Usage");
+            table.CreateIfNotExists();
 
             var queryResult = table.Query<Usage>(filter: $"notificationId eq '{notificationId}'").ToArray();
 
