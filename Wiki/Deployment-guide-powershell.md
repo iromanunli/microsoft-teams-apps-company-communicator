@@ -141,7 +141,7 @@ To begin, you will need:
     
         > **Note:** The default value is 2 to minimize the chances of an error during app deployment. After deployment you can choose to change the size of the hosting plan.
 
-    - `gitRepoUrl` - The URL to the GitHub repository to deploy. Default value: [https://github.com/OfficeDev/microsoft-teams-company-communicator-app.git](https://github.com/OfficeDev/microsoft-teams-company-communicator-app.git)
+    - `gitRepoUrl` - The URL to the GitHub repository to deploy. Default value: [https://github.com/iromanunli/microsoft-teams-apps-company-communicator.git](https://github.com/iromanunli/microsoft-teams-apps-company-communicator.git)
     - `gitBranch` - The branch of the GitHub repository to deploy. Default value: main
     - `appDisplayName` - The app (and bot) display name. Default value:Company Communicator.
     - `appDescription` - The app (and bot) description. Default value: Broadcast messages to multiple teams and people in one go.
