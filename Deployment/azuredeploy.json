@@ -741,8 +741,8 @@
           "type": "sourcecontrols",
           "condition": "[not(empty(parameters('gitRepoUrl')))]",
           "dependsOn": [
-            "[resourceId('Microsoft.Web/sites', variables('botAppName'))]",
-            "[resourceId('Microsoft.Web/sites/config', variables('botAppName'), 'appsettings')]"
+            "[resourceId('Microsoft.Web/sites', variables('redirectorName'))]",
+            "[resourceId('Microsoft.Web/sites/config', variables('redirectorName'), 'appsettings')]"
           ],
           "properties": {
             "RepoUrl": "[parameters('gitRepoUrl')]",
