@@ -710,11 +710,7 @@
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
         "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
-        "[resourceId('Microsoft.Insights/components', variables('appInsightsName'))]",
-        "[resourceId('Microsoft.ServiceBus/namespaces', variables('serviceBusNamespaceName'))]",
-        "[resourceId('Microsoft.Web/sites', variables('prepFunctionAppName'))]",
-        "[resourceId('Microsoft.Web/sites', variables('sendFunctionAppName'))]",
-        "[resourceId('Microsoft.Web/sites', variables('dataFunctionAppName'))]"
+        "[resourceId('Microsoft.Insights/components', variables('appInsightsName'))]"
       ],
       "resources": [
         {
@@ -722,10 +718,9 @@
           "name": "appsettings",
           "type": "config",
           "dependsOn": [
-            "[resourceId('Microsoft.Web/sites', variables('botAppName'))]",
+            "[resourceId('Microsoft.Web/sites', variables('redirectorName'))]",
             "[resourceId('Microsoft.KeyVault/vaults/', variables('keyVaultName'))]",
-            "[resourceId('Microsoft.KeyVault/vaults/secrets', variables('keyVaultName'), variables('StorageAccountSecretName'))]",
-            "[resourceId('Microsoft.KeyVault/vaults/secrets', variables('keyVaultName'), variables('ServiceBusSecretName'))]"
+            "[resourceId('Microsoft.KeyVault/vaults/secrets', variables('keyVaultName'), variables('StorageAccountSecretName'))]"
           ],
           "properties": {
             "PROJECT": "Source/Microsoft.Teams.Apps.CompanyCommunicator.Redirector/Microsoft.Teams.Apps.CompanyCommunicator.Redirector.csproj",
