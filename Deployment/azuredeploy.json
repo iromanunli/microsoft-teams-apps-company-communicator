@@ -723,7 +723,7 @@
             "[resourceId('Microsoft.KeyVault/vaults/secrets', variables('keyVaultName'), variables('StorageAccountSecretName'))]"
           ],
           "properties": {
-            "PROJECT": "Source/Microsoft.Teams.Apps.CompanyCommunicator.Redirector/Microsoft.Teams.Apps.CompanyCommunicator.Redirector.csproj",
+            "PROJECT": "Source\\Microsoft.Teams.Apps.CompanyCommunicator.Redirector\\Microsoft.Teams.Apps.CompanyCommunicator.Redirector.csproj",
             "SITE_ROLE": "app",
             "i18n:DefaultCulture": "[variables('i18n:DefaultCulture')]",
             "i18n:SupportedCultures": "[variables('i18n:SupportedCultures')]",
